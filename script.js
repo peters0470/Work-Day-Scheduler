@@ -8,11 +8,11 @@ var taskArea = $(".container");
 function beginScheduler() {
     toDoRow.each(function() {
     var hourRow = $(this);
-    var toDoRowHour = parseInt(hourRow.attr("data-hour"));
+    var hourRowHr = parseInt(hourRow.attr("data-hour"));
 
     var toDoObj = {
-        hour: toDoRowHour,
-        text: ""
+        hour: hourRowHr,
+        text: "",
     }
     tasksToDo.push(toDoObj);
     });
@@ -38,7 +38,7 @@ function colorRows() {
         var eachRowHour = parseInt(eachRow.attr("data-hour"));
         if (eachRowHour == currentHour) {
             eachRow.addClass("present").removeClass("future past");
-    }
+        }
         if (eachRowHour > currentHour) {
             eachRow.addClass("future").removeClass("present past");
         }
@@ -48,5 +48,24 @@ function colorRows() {
     });
 }
 
-taskArea.on("click", "button", saveTask);
-colorRows();
+function getSchedule() {
+    tasksToDo = localStorage.getItem("tasks");
+    tasksToDo = JSON.parse(tasksToDo);
+    for (var j = 0; j < tasksToDo.length; j++) {
+        var toDoHour = tasksToDo[j].hour;
+        var toDoText = tasksToDo[j].text;
+        $("[data-hour=" + toDoHour + "]").children("textarea").val(toDoText);
+    }
+}
+$(document).ready(function(){
+    colorRows();
+
+    if (!localStorage.getItem("tasks")) {
+        beginScheduler();
+    }
+    currentDay.text(currentDate);
+    getSchedule();
+
+    taskArea.on("click", "button", saveTask);
+
+});
