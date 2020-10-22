@@ -31,6 +31,7 @@ function saveTask() {
         }
     }
     localStorage.setItem("tasks", JSON.stringify(tasksToDo));   
+    getSchedule();
 }
 
 function colorRows() {
