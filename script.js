@@ -19,3 +19,14 @@ function beginScheduler() {
 };
 
 currentDay.text(currentDate);
+
+function saveTask() {
+    var tasksToDoHour = $(this).parent().attr("hour");
+    var taskAdd = (($(this).parent()).children("textarea")).val();
+    for (var i = 0 ; i < tasksToDo.length; i++) {
+        if (tasksToDo[i].hour == tasksToDoHour) {
+            tasksToDo[i].text = taskAdd;
+        }
+    }
+    localStorage.setItem("tasks", JSON.stringify(tasksToDo));
+}
