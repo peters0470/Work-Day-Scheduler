@@ -5,6 +5,7 @@ var tasksToDo = [];
 var toDoRow = $(".row");
 var taskArea = $(".container");
 
+
 function beginScheduler() {
     toDoRow.each(function() {
     var hourRow = $(this);
@@ -34,16 +35,16 @@ function saveTask() {
 
 function colorRows() {
     toDoRow.each(function() {
-        var eachRow = $(this);
-        var eachRowHour = parseInt(eachRow.attr("data-hour"));
-        if (eachRowHour == currentHour) {
-            eachRow.addClass("present").removeClass("future past");
+        var hourRow = $(this);
+        var hourRowHr = parseInt(hourRow.attr("data-hour"));
+        if (hourRowHr == currentHour) {
+            hourRow.addClass("present").removeClass("future past");
         }
-        if (eachRowHour > currentHour) {
-            eachRow.addClass("future").removeClass("present past");
+        if (hourRowHr > currentHour) {
+            hourRow.addClass("future").removeClass("present past");
         }
-        if (eachRowHour < currentHour) {
-            eachRow.addClass("past").removeClass("present future");
+        if (hourRowHr < currentHour) {
+            hourRow.addClass("past").removeClass("present future");
         }
     });
 }
@@ -64,6 +65,7 @@ $(document).ready(function(){
         beginScheduler();
     }
     currentDay.text(currentDate);
+
     getSchedule();
 
     taskArea.on("click", "button", saveTask);
